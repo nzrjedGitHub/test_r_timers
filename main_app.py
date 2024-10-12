@@ -132,6 +132,14 @@ class CheckSits(Screen):
 class PulseScr2(Screen):
     def __init__(self, **kwargs,):
         super().__init__( **kwargs)
+
+        self.next_screen = False
+        self.stage = 0
+
+        self.lbl_sec = Seconds(3) 
+        self.lbl_sec.bind(done=self.sec_finished)
+        self.lbl1 = Label(text="Заміряйте пульс")
+
         instr = Label(text=txt_test3)
         line1 = BoxLayout(size_hint=(0.8, None), height="30sp")
         lbl_result1 = Label(text="Результат:", halign="right")
@@ -148,7 +156,13 @@ class PulseScr2(Screen):
         )
         self.btn.on_press = self.next
         outer = BoxLayout(orientation="vertical", padding=8, spacing=8)
+
+        self.in_result1.set_disabled(True)#
+        self.in_result2.set_disabled(True)#
+
         outer.add_widget(instr)
+        outer.add_widget(self.lbl1) #
+        outer.add_widget(self.lbl_sec) #
         outer.add_widget(line1)
         outer.add_widget(line2)
         outer.add_widget(self.btn)
