@@ -152,7 +152,7 @@ class PulseScr2(Screen):
         line2.add_widget(lbl_result2)
         line2.add_widget(self.in_result2)
         self.btn = Button(
-            text="Завершити", size_hint=(0.3, 0.2), pos_hint={"center_x": 0.5}
+            text="Почати", size_hint=(0.3, 0.2), pos_hint={"center_x": 0.5}
         )
         self.btn.on_press = self.next
         outer = BoxLayout(orientation="vertical", padding=8, spacing=8)
@@ -186,18 +186,21 @@ class PulseScr2(Screen):
                 self.next_screen = True
 
     def next(self):
-        global p2, p3
-        p2 = check_int(self.in_result1.text)
-        p3 = check_int(self.in_result2.text)
-        if p2 == False:
-            p2 = 0
-            self.in_result1.text = str(p2)
-        elif p3 == False:
-            p3 = 0
-            self.in_result2.text = str(p3)
+        if self.next_screen == False:
+            self.btn.set_disabled(True)
+            self.lbl_sec.start()
         else:
-            self.manager.current = "result"
-
+            global p2, p3
+            p2 = check_int(self.in_result1.text)
+            p3 = check_int(self.in_result2.text)
+            if p2 == False:
+                p2 = 0
+                self.in_result1.text = str(p2)
+            elif p3 == False:
+                p3 = 0
+                self.in_result2.text = str(p3)
+            else:
+                self.manager.current = "result"
 
 class Result(Screen):
     def __init__(self, **kwargs):
@@ -206,6 +209,7 @@ class Result(Screen):
         self.instr = Label(text="place for results")
         self.outer.add_widget(self.instr)
         self.add_widget(self.outer)
+
 
 
 class HeartCheck(App):
