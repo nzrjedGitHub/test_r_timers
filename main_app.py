@@ -10,7 +10,7 @@ from kivy.core.window import Window
 from kivy.uix.scrollview import ScrollView
 from instructions import txt_instruction, txt_test1, txt_test2, txt_test3, txt_sits
 from seconds import Seconds
-
+from ruffier import test
 
 age = 7
 name = ""
@@ -173,12 +173,12 @@ class PulseScr2(Screen):
             if self.stage == 0:
                 self.stage = 1
                 self.lbl1.text = "Відпочивайте"
-                self.lbl_sec.restart(30)
+                self.lbl_sec.restart(3)
                 self.in_result1.set_disabled(False)
             elif self.stage == 1:
                 self.stage = 2
                 self.lbl1.text = "Заміряйте пульс"
-                self.lbl_sec.restart(15)
+                self.lbl_sec.restart(3)
             elif self.stage == 2:
                 self.in_result2.set_disabled(False)
                 self.btn.set_disabled(False)
@@ -209,7 +209,10 @@ class Result(Screen):
         self.instr = Label(text="place for results")
         self.outer.add_widget(self.instr)
         self.add_widget(self.outer)
+        self.on_enter = self.before
 
+    def before(self):
+      self.instr.text = name + '\n' + test(p1, p2, p3, age)
 
 
 class HeartCheck(App):
