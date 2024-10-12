@@ -67,6 +67,7 @@ class PulseScr(Screen):
         super().__init__(**kwargs)
 
         self.next_screen = False
+        self.stage = 0
 
         instr = Label(text=txt_test1)
         self.lbl_sec = Seconds(3)
@@ -152,6 +153,23 @@ class PulseScr2(Screen):
         outer.add_widget(line2)
         outer.add_widget(self.btn)
         self.add_widget(outer)
+
+    def sec_finished(self, *args):
+        if self.lbl_sec.done:
+            if self.stage == 0:
+                self.stage = 1
+                self.lbl1.text = "Відпочивайте"
+                self.lbl_sec.restart(30)
+                self.in_result1.set_disabled(False)
+            elif self.stage == 1:
+                self.stage = 2
+                self.lbl1.text = "Заміряйте пульс"
+                self.lbl_sec.restart(15)
+            elif self.stage == 2:
+                self.in_result2.set_disabled(False)
+                self.btn.set_disabled(False)
+                self.btn.text = "Завершити"
+                self.next_screen = True
 
     def next(self):
         global p2, p3
